@@ -1,0 +1,24 @@
+{% extends 'BlogBundle:layouts:master.html.twig' %}
+
+{% block content %}
+
+
+    <h1>{{ result.title }}</h1>
+    <hr>
+    <p>{{ result.body }}</p>
+
+    <br>
+
+    <br>
+
+<form method="post" action="{{ result.id }}/comment/create">
+    <div class="form-group">
+        <textarea class="col-md-12" name="body" id="body"></textarea>
+    </div>
+    <div class="form-group">
+        <button class="btn-primary" type="submit">Отправить</button>
+    </div>
+</form>
+
+
+{% endblock %}
