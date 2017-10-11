@@ -6,9 +6,13 @@ use Blogger\BlogBundle\BlogBundle;
 use Blogger\BlogBundle\Entity\Comment;
 use Blogger\BlogBundle\Entity\Post;
 use Blogger\BlogBundle\Repository\PostRepository;
+use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\Form\Extension\Core\DataTransformer\DateTimeToStringTransformer;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\Validator\Constraints\Date;
@@ -67,7 +71,34 @@ class BlogController extends Controller
             ->getRepository(Post::class)
             ->find($id);
 
-        return $this->render('BlogBundle:Blog:show.html.twig', array('result' => $post));
+        $comment = new Comment();
+        $comment->setBody('Write a text');
+        $comment->setCreated(\date('Y:m:d в H:i:s'));
+
+        $form = $this->createFormBuilder($comment)
+            ->add('body', TextareaType::class)
+            ->add('save',SubmitType::class, array('label' => 'Отправить'))
+            ->getForm();
+
+        $form->handleRequest($form);
+
+        if ($form->isValid() && $form->isSubmitted()){
+
+            $task = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+
+            $post = $em->find('BlogBundle:Post', 'id');
+
+            $post->comment($task);
+
+            $em->persist($task);
+            $em->flush();
+
+            return $this->redirectToRoute('post');
+
+        }
+
+        return $this->render('BlogBundle:Blog:show.html.twig', array('result' => $post, 'form' => $form->createView()));
     }
 
     /**
