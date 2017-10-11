@@ -65,36 +65,37 @@ class BlogController extends Controller
     /**
      * @Route("/posts/{id}", name="post")
      */
-    public function postAction($id){
+    public function postAction(Request $request, $id){
 
         $post = $this->getDoctrine()
             ->getRepository(Post::class)
             ->find($id);
 
         $comment = new Comment();
-        $comment->setBody('Write a text');
+        $comment->setPost($post);
+        $comment->setBody('Write a comment');
         $comment->setCreated(\date('Y:m:d в H:i:s'));
 
+
         $form = $this->createFormBuilder($comment)
-            ->add('body', TextareaType::class)
+            ->add( 'body',TextareaType::class)
             ->add('save',SubmitType::class, array('label' => 'Отправить'))
             ->getForm();
 
-        $form->handleRequest($form);
+        $form->handleRequest($request);
 
         if ($form->isValid() && $form->isSubmitted()){
 
             $task = $form->getData();
             $em = $this->getDoctrine()->getManager();
 
-            $post = $em->find('BlogBundle:Post', 'id');
 
             $post->comment($task);
 
             $em->persist($task);
             $em->flush();
 
-            return $this->redirectToRoute('post');
+            return $this->redirectToRoute('index');
 
         }
 
