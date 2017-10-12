@@ -71,10 +71,14 @@ class BlogController extends Controller
             ->getRepository(Post::class)
             ->find($id);
 
+        $comments = $this->getDoctrine()
+            ->getRepository(Comment::class)
+            ->findAll($id);
+
         $comment = new Comment();
         $comment->setPost($post);
         $comment->setBody('Write a comment');
-        $comment->setCreated(\date('Y:m:d в H:i:s'));
+        $comment->setCreated();
 
 
         $form = $this->createFormBuilder($comment)
@@ -84,7 +88,7 @@ class BlogController extends Controller
 
         $form->handleRequest($request);
 
-        if ($form->isValid() && $form->isSubmitted()){
+        if ($form->isSubmitted() && $form->isValid() ){
 
             $task = $form->getData();
             $em = $this->getDoctrine()->getManager();
@@ -99,7 +103,7 @@ class BlogController extends Controller
 
         }
 
-        return $this->render('BlogBundle:Blog:show.html.twig', array('result' => $post, 'form' => $form->createView()));
+        return $this->render('BlogBundle:Blog:show.html.twig', array('post' => $post, 'comments' => $comments, 'form' => $form->createView()));
     }
 
     /**

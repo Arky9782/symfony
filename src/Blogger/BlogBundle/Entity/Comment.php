@@ -39,7 +39,7 @@ class Comment
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="created", type="string")
+     * @ORM\Column(name="created", type="datetime")
      */
     private $created;
 
@@ -99,9 +99,9 @@ class Comment
      *
      * @return Comment
      */
-    public function setCreated($created)
+    public function setCreated()
     {
-        $this->created = $created;
+        $this->created = new \DateTime("now");
 
         return $this;
     }

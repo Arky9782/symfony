@@ -3,13 +3,25 @@
 {% block content %}
 
 
-    <h1>{{ result.title }}</h1>
+    <h1>{{ post.title }}</h1>
     <hr>
-    <p>{{ result.body }}</p>
+    <p>{{ post.body }}</p>
 
     <br>
 
     <br>
+
+
+    {% for comment in comments %}
+        <div class="col-md-2">
+            {{ comment.created }}
+        </div>
+    <div class="col-md-2">
+        {{ comment.body }}
+    </div>
+    {% endfor %}
+
+
 
 {{ form_start(form) }}
 {{ form_widget(form) }}
