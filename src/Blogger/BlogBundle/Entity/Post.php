@@ -83,6 +83,11 @@ class Post
         $this->comments->add($comment);
     }
 
+    public function getComments(){
+
+        return $this->comments;
+    }
+
     /**
      * Get title
      *

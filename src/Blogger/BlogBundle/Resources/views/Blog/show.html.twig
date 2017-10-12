@@ -5,7 +5,7 @@
 
     <h1>{{ post.title }}</h1>
     <hr>
-    <p>{{ post.body }}</p>
+    <div class="col-md-12"><strong>{{ post.body }}</strong></div>
 
     <br>
 
@@ -13,18 +13,23 @@
 
 
     {% for comment in comments %}
-        <div class="col-md-2">
-            {{ comment.created }}
-        </div>
+
+        <p>
+            {{ comment.created|date("F jS \\a\\t g:ia") }}
+        </p>
+
     <div class="col-md-2">
         {{ comment.body }}
     </div>
+        <hr>
     {% endfor %}
 
 
 
-{{ form_start(form) }}
-{{ form_widget(form) }}
-{{ form_end(form) }}
+<div class="col-md-2">
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+    {{ form_end(form) }}
+</div>
 
 {% endblock %}

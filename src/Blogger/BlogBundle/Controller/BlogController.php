@@ -71,9 +71,7 @@ class BlogController extends Controller
             ->getRepository(Post::class)
             ->find($id);
 
-        $comments = $this->getDoctrine()
-            ->getRepository(Comment::class)
-            ->findAll($id);
+        $comments = $post->getComments();
 
         $comment = new Comment();
         $comment->setPost($post);
