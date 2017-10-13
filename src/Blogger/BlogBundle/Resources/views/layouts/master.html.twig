@@ -23,18 +23,12 @@
     <div class="container">
         <nav class="nav">
             {% if app.user is not null %}
-            <a class="nav-link active" href="{{ path('index') }}">Home</a>
-            <a class="nav-link" href="#">New features</a>
-            <a class="nav-link" href="#">Press</a>
-            <a class="nav-link" href="{{ path('create') }}">New Post</a>
+            {% include '@Blog/layouts/navbar.html.twig' %}
             <a class="nav-link" href="{{path('fos_user_profile_show') }}">{{ app.user.username }}</a>
             <a class="nav-link" href="{{ path('fos_user_security_logout') }}">Logout</a>
 
             {% else %}
-                <a class="nav-link active" href="{{ path('index') }}">Home</a>
-                <a class="nav-link" href="#">New features</a>
-                <a class="nav-link" href="#">Press</a>
-                <a class="nav-link" href="{{ path('create') }}e">New Post</a>
+                {% include '@Blog/layouts/navbar.html.twig' %}
                 <a class="nav-link" href="{{ path('fos_user_security_login') }}">Login</a>
                 <a class="nav-link" href="{{ path('fos_user_registration_register') }}">Register</a>
 
