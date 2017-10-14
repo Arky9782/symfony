@@ -5,7 +5,9 @@ namespace Blogger\BlogBundle\Controller;
 use Blogger\BlogBundle\BlogBundle;
 use Blogger\BlogBundle\Entity\Comment;
 use Blogger\BlogBundle\Entity\Post;
+use Blogger\BlogBundle\Entity\User;
 use Blogger\BlogBundle\Repository\PostRepository;
+use Blogger\BlogBundle\Repository\UserRepository;
 use Doctrine\DBAL\Types\TextType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -15,6 +17,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\SubmitButton;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\DateTime;
 
@@ -48,7 +51,10 @@ class BlogController extends Controller
 
         $em = $this->getDoctrine()->getManager();
 
+        $user = $this->getUser();
+
         $post = new Post();
+        $post->setUser($user);
         $post->setBody($request->get('body'));
         $post->setTitle($request->get('title'));
         $post->setCreated($time = date('H:i:s в d/m/Y'));
@@ -71,12 +77,20 @@ class BlogController extends Controller
             ->getRepository(Post::class)
             ->find($id);
 
+        $user = $this->getUser();
+
+
         $comments = $post->getComments();
+        $postAuthor = $post->getUser();
 
         $comment = new Comment();
+        $comment->setUser($user);
         $comment->setPost($post);
         $comment->setBody('Write a comment');
         $comment->setCreated();
+
+        $commentAuthor = $comment->getUser();
+
 
 
         $form = $this->createFormBuilder($comment)
@@ -101,7 +115,7 @@ class BlogController extends Controller
 
         }
 
-        return $this->render('BlogBundle:Blog:show.html.twig', array('post' => $post, 'comments' => $comments, 'form' => $form->createView()));
+        return $this->render('BlogBundle:Blog:show.html.twig', array('post' => $post, 'commentAuthor' =>$commentAuthor, 'postAuthor' => $postAuthor, 'comments' => $comments, 'form' => $form->createView()));
     }
 
     /**

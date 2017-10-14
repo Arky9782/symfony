@@ -4,6 +4,7 @@
 
 
     <h1>{{ post.title }}</h1>
+    {{ postAuthor.username }}
     <hr>
     <div class="col-md-12"><strong>{{ post.body }}</strong></div>
 
@@ -17,6 +18,8 @@
         <p>
             {{ comment.created|date("F jS \\a\\t g:ia") }}
         </p>
+
+        {{ commentAuthor.username }}
 
     <div class="col-md-2">
         {{ comment.body }}

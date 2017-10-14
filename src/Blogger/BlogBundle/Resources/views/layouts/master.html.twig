@@ -22,13 +22,12 @@
 <div class="blog-masthead">
     <div class="container">
         <nav class="nav">
-            {% if app.user is not null %}
             {% include '@Blog/layouts/navbar.html.twig' %}
+            {% if app.user is not null %}
             <a class="nav-link" href="{{path('fos_user_profile_show') }}">{{ app.user.username }}</a>
             <a class="nav-link" href="{{ path('fos_user_security_logout') }}">Logout</a>
 
             {% else %}
-                {% include '@Blog/layouts/navbar.html.twig' %}
                 <a class="nav-link" href="{{ path('fos_user_security_login') }}">Login</a>
                 <a class="nav-link" href="{{ path('fos_user_registration_register') }}">Register</a>
 

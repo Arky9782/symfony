@@ -30,6 +30,16 @@ class Comment
     private $post;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="comments")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    public function getUser(){
+        return $this->user;
+    }
+
+    /**
      * @var string
      *
      * @ORM\Column(name="body", type="text")
@@ -80,6 +90,14 @@ class Comment
         $this->post = $post;
 
         return $this;
+    }
+
+    public function setUser($user)
+    {
+        $this->user = $user;
+
+           return $this;
+
     }
 
     /**

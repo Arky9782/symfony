@@ -27,10 +27,27 @@ class Post
      */
     private $comments;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
+
+    public function setUser($user){
+        $this->user = $user;
+        return $user;
+    }
+
+    public function getUser(){
+        return $this->user;
+    }
+
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
     }
+
 
     /**
      * @var string
