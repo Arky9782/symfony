@@ -118,30 +118,5 @@ class BlogController extends Controller
         return $this->render('BlogBundle:Blog:show.html.twig', array('post' => $post, 'commentAuthor' =>$commentAuthor, 'postAuthor' => $postAuthor, 'comments' => $comments, 'form' => $form->createView()));
     }
 
-    /**
-     * @Route("/posts/{id}/comment/create", name="comment_store")
-     * @Method({"POST"})
-     */
-    public function comment_storeAction($id, Request $request){
 
-
-        $em = $this->getDoctrine()
-            ->getManager();
-
-        $post = $em->find('BlogBundle:Post', 'id');
-
-        $comment = new Comment();
-        $comment->setBody($request->get('body'));
-        $comment->setCreated(\date('Y:m:d в H:i:s'));
-        $commentId = $comment->getId();
-
-        //$addComment = $em->f;
-
-        //$post->comment($addComment);
-
-        $em->persist($comment);
-        $em->flush();
-
-        return $this->$commentId;
-    }
 }
