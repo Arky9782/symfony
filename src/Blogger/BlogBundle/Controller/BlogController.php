@@ -83,13 +83,15 @@ class BlogController extends Controller
         $comments = $post->getComments();
         $postAuthor = $post->getUser();
 
+
+
+
         $comment = new Comment();
         $comment->setUser($user);
         $comment->setPost($post);
         $comment->setBody('Write a comment');
         $comment->setCreated();
 
-        $commentAuthor = $comment->getUser();
 
 
 
@@ -115,7 +117,7 @@ class BlogController extends Controller
 
         }
 
-        return $this->render('BlogBundle:Blog:show.html.twig', array('post' => $post, 'commentAuthor' =>$commentAuthor, 'postAuthor' => $postAuthor, 'comments' => $comments, 'form' => $form->createView()));
+        return $this->render('BlogBundle:Blog:show.html.twig', array('post' => $post, 'postAuthor' => $postAuthor, 'comments' => $comments, 'form' => $form->createView()));
     }
 
 
