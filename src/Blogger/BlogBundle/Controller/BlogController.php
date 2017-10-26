@@ -37,15 +37,12 @@ class BlogController extends Controller
     /**
      * @Route("/posts/create", name="create")
      */
-    public function createAction(){
-        return $this->render('BlogBundle:Blog:create.html.twig');
-    }
 
     /**
      * @Route("/posts/", name="store")
      * @Method({"POST"})
      */
-    public function storeAction(Request $request){
+    public function createAction(Request $request){
 
 
 
