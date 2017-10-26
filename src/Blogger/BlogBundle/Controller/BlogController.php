@@ -37,12 +37,15 @@ class BlogController extends Controller
     /**
      * @Route("/posts/create", name="create")
      */
+    public function createAction(){
+        return $this->render('BlogBundle:Blog:create.html.twig');
+    }
 
     /**
      * @Route("/posts/", name="store")
      * @Method({"POST"})
      */
-    public function createAction(Request $request){
+    public function storeAction(Request $request){
 
 
 
@@ -65,10 +68,11 @@ class BlogController extends Controller
 
     }
 
+
     /**
      * @Route("/posts/{id}", name="post")
      */
-    public function postAction(Request $request, $id){
+    public function postAction(Comment $comment, Request $request, $id){
 
         $post = $this->getDoctrine()
             ->getRepository(Post::class)
@@ -82,14 +86,10 @@ class BlogController extends Controller
 
 
 
-
         $comment = new Comment();
         $comment->setUser($user);
-        $comment->setPost($post);
-        $comment->setBody('Write a comment');
+        $comment->setBody('Write a new comment');
         $comment->setCreated();
-
-
 
 
         $form = $this->createFormBuilder($comment)
@@ -103,7 +103,6 @@ class BlogController extends Controller
 
             $task = $form->getData();
             $em = $this->getDoctrine()->getManager();
-
 
             $post->comment($task);
 

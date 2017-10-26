@@ -33,7 +33,7 @@ class Post
      */
     private $user;
 
-    public function setUser(User $user) :string
+    public function setUser(User $user)
     {
         $this->user = $user;
         return $user;
@@ -98,6 +98,7 @@ class Post
 
     public function comment(Comment $comment)
     {
+        $comment->setPost($this);
         $this->comments->add($comment);
     }
 
@@ -163,5 +164,7 @@ class Post
     {
         return $this->created;
     }
+
+
 }
 
