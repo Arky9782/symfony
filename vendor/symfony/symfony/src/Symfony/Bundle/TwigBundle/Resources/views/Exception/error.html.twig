@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="{{ _charset }}" />
-        <title>An Error Occurred: {{ status_text }}</title>
-    </head>
-    <body>
-        <h1>Oops! An Error Occurred</h1>
-        <h2>The server returned a "{{ status_code }} {{ status_text }}".</h2>
+{% extends '@Blog/layouts/master.html.twig' %}
 
-        <div>
-            Something is broken. Please let us know what you were doing when this error occurred.
-            We will fix it as soon as possible. Sorry for any inconvenience caused.
-        </div>
-    </body>
-</html>
+{% block content %}
+
+<h1>Sorry, something went wrong.</h1>
+
+<a href="{{ path('index') }}"><h6>Back to main page.</h6></a>
+
+{% endblock %}

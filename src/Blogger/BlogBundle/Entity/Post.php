@@ -33,7 +33,8 @@ class Post
      */
     private $user;
 
-    public function setUser($user){
+    public function setUser(User $user) :string
+    {
         $this->user = $user;
         return $user;
     }
