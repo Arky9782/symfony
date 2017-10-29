@@ -77,9 +77,7 @@ class BlogController extends Controller
         $post = $this->getDoctrine()
             ->getRepository(Post::class)
             ->find($id);
-
-        $user = $this->getUser();
-
+        
 
         $comments = $post->getComments();
         $postAuthor = $post->getUser();
