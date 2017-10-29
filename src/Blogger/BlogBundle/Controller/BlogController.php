@@ -72,7 +72,7 @@ class BlogController extends Controller
     /**
      * @Route("/posts/{id}", name="post")
      */
-    public function postAction(Comment $comment, Request $request, $id){
+    public function postAction(User $userComment, Request $request, $id){
 
         $post = $this->getDoctrine()
             ->getRepository(Post::class)
@@ -87,9 +87,7 @@ class BlogController extends Controller
 
 
         $comment = new Comment();
-        $comment->setUser($user);
-        $comment->setBody('Write a new comment');
-        $comment->setCreated();
+        $comment->setBody('Write a comment');
 
 
         $form = $this->createFormBuilder($comment)
@@ -105,6 +103,7 @@ class BlogController extends Controller
             $em = $this->getDoctrine()->getManager();
 
             $post->comment($task);
+            $userComment->comment($task);
 
             $em->persist($task);
             $em->flush();

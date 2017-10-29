@@ -50,5 +50,13 @@ class User extends BaseUser
     {
         return $this->id;
     }
+
+    public function comment(Comment $comment){
+        $comment->setCreated();
+        $comment->setUser($this);
+        $this->comments->add($comment);
+    }
+
+
 }
 
